@@ -23,6 +23,19 @@ public with sharing class CTPersonController {
         ];
     }
 
+    public static Map<String, Integer> getHealthStatusCount() {
+        Map<String, Integer> healthStatusCountMap = new Map<String, Integer>();
+
+        for(AggregateResult result : [SELECT Health_Status__c, COUNT(Id) total FROM Person__c GROUP BY Health_Status__c]) {
+            healthStatusCountMap.put(
+                String.valueOf(result.get('Health_Status__c')),
+                Integer.valueOf(result.get('total'))
+            );
+        }
+
+        return healthStatusCountMap;
+    }
+
     /**
      * Searches for person records matching the search term
      * @return List<Person__c>
