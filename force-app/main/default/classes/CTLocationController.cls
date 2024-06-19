@@ -12,6 +12,19 @@ public with sharing class CTLocationController {
         ];
     }
 
+    public static Map<String, Integer> getStatusCount() {
+        Map<String, Integer> statusCountMap = new Map<String, Integer>();
+
+        for(AggregateResult result : [SELECT Status__c, COUNT(Id) total FROM Location__c GROUP BY Status__c]) {
+            statusCountMap.put(
+                String.valueOf(result.get('Status__c')),
+                Integer.valueOf(result.get('total'))
+            );
+        }
+
+        return statusCountMap;
+    }
+
     /**
      * Searches for person records matching the search term
      * @return List<Location__c>
