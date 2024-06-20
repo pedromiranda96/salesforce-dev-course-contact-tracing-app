@@ -7,5 +7,9 @@ trigger CTLocationTrigger on Location__c (before insert, after insert, before up
     when BEFORE_UPDATE {
       CTLocationTriggerHandler.beforeUpdateHandler(Trigger.new, Trigger.oldMap);
     }
+
+    when AFTER_UPDATE {
+      CTLocationTriggerHandler.afterUpdateHandler(Trigger.new, Trigger.oldMap);
+    }
   }
 }
