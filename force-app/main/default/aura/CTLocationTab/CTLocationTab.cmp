@@ -1,0 +1,74 @@
+<aura:component controller="CTLocationTabController" implements="force:appHostable">
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="columns" type="List" />
+  <aura:attribute name="location" type="Object" />
+  <aura:attribute name="locationFound" type="Boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <div class="main-container">
+    <div class="search-panel">
+      <lightning:input type="text" name="recordId" label="Location ID" variant="label-hidden" value="{!v.recordId}" />
+      <lightning:button label="Seach location" title="Search location" onclick="{!c.searchHandler}" variant="neutral" />
+    </div>
+
+    <aura:if isTrue="{!v.locationFound}">
+      <div class="card-container slds-align_absolute-center">
+        <div class="header-panel">
+          <div class="{! v.location.status + ' health-header'}">
+            {!v.location.name} - Status: {!v.location.status}
+          </div>
+          <div class="subheader-panel">
+            <div class="subheader-row">
+              <div class="row-item">
+                <div class="row-item-label slds-text-title">
+                  Pincode
+                </div>
+                <div class="row-item-value">
+                  {v.location.pinCode}
+                </div>
+              </div>
+            
+              <div class="row-item">
+                <div class="row-item-label slds-text-title">
+                  Red Score
+                </div>
+                <div class="row-item-value">
+                  {v.location.redScore}
+                </div>
+              </div>
+
+              <div class="row-item">
+                <div class="row-item-label slds-text-title">
+                  Status Update Date
+                </div>
+                <div class="row-item-value">
+                  {v.user.statusUpdateDate}
+                </div>
+              </div>
+
+
+              <div class="row-item">
+                <div class="row-item-label slds-text-title">
+                  Visits in Last 30 Days
+                </div>
+                <div class="row-item-value">
+                  {v.user.visitsCount}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="body">
+          <div class="slds-text-heading_medium slds-var-p-left_xx-small">
+            Recent Visits
+          </div>
+          <div class="contacts">
+            <lightning:datatable keyField="id" data="{!v.location.visits}" columns="{!v.columns}" hideCheckboxColumn="true" />
+          </div>
+        </div>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>	

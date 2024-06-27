@@ -4,8 +4,9 @@ public with sharing class CTPeopleTracingController {
             SELECT Id, Contact_Date__c, Person_1__c, Person_1__r.Health_Status__c, Person_1__r.Token__c, Person_2__c, Person_2__r.Health_Status__c, Person_2__r.Token__c
             FROM People_Tracing__c
             WHERE
-                Person_1__c = :personId
-                OR Person_2__c = :personId
+                (Person_1__c = :personId
+                OR Person_2__c = :personId)
+                AND Contact_Date__c = LAST_N_DAYS:30
             ORDER BY Contact_Date__c DESC    
         ];
     }

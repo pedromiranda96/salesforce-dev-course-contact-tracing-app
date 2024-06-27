@@ -101,4 +101,21 @@ public with sharing class CTLocationController {
         if(redScore <= 10) return 'Orange';
         return 'Red';
     }
+
+    /**
+     * Gets the number of locations in each health status
+     * @return Map<String, Integer>
+     */
+    public static Map<String, Integer> getHealthStatusCount() {
+        Map<String, Integer> healthStatusCountMap = new Map<String, Integer>();
+
+        for(AggregateResult result : [SELECT Status__c, COUNT(Id) total FROM Location__c GROUP BY Status__c]) {
+            healthStatusCountMap.put(
+                String.valueOf(result.get('Status__c')),
+                Integer.valueOf(result.get('total'))
+            );
+        }
+
+        return healthStatusCountMap;
+    }
 }
